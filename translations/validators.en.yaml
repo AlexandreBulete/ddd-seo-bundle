@@ -1,0 +1,5 @@
+seo:
+    canonical:
+        invalid: "A path starting with \"/\", or a full http(s):// address."
+    robots:
+        no_sitemap: "No \"Sitemap:\" line: it is added on its own."

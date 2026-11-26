@@ -1,0 +1,56 @@
+seo:
+    ui:
+        seo_pages: SEO of the site's pages
+        seo_page: page
+        edit_seo_page: SEO of the page
+        seo_templates: SEO templates
+        seo_template: template
+        edit_seo_template: SEO template
+        seo_settings: SEO settings
+        edit_seo_settings: SEO settings
+    menu:
+        root: SEO
+        pages: Site pages
+        templates: Templates
+        settings: Settings
+    kind:
+        route: Site pages
+    variable:
+        page_title: page title
+        site: site name
+    block: Search engines (SEO)
+    field:
+        title: Title for search engines
+        title_help: "Empty: the template of the kind of content. Aim for 50 to 60 characters, Google cuts beyond."
+        description: Description for search engines
+        description_help: "Empty: the template, else the start of the text. Aim for 120 to 155 characters."
+        canonical: Canonical address
+        canonical_help: "Empty: the page's own address. Another one (\"/reviews/…\" or \"https://…\") tells engines to list that one instead, and takes the page out of the sitemap."
+        noindex: Keep this page out of search engines
+        noindex_help: "Engines no longer show it in their results; it leaves the sitemap. Links are still followed."
+        share_title: Title when shared
+        share_title_help: "Facebook, LinkedIn, WhatsApp… Empty: the content's title."
+        share_description: Text when shared
+    page:
+        label: Page
+        path: Address
+    template:
+        kind: Kind of content
+        title: Title pattern
+        description: Description pattern
+        title_help: "Variables: %variables%. %empty%"
+        description_help: "Variables: %variables%. %empty%"
+        empty_gives: "Empty: \"%pattern%\"."
+        title_empty: "Empty: the default title pattern of the settings."
+        description_empty: "Empty: the start of the content's text."
+        title_fallback: (settings pattern)
+        description_fallback: (start of the text)
+    settings:
+        indexing: Allow search engines
+        indexing_help: "Unticked: the whole site is noindex, robots.txt disallows everything, the sitemap is empty. For a test copy, or before going live."
+        indexing_on: Allowed
+        indexing_off: Disallowed
+        title_pattern: Default title pattern
+        title_pattern_help: "For a kind of content without a template. Variables: {title} (page title), {site} (site name)."
+        robots: robots.txt rules
+        robots_help: "The sitemap line is added on its own, at the end. Empty: everything allowed but /admin/."

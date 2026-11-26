@@ -1,0 +1,5 @@
+seo:
+    canonical:
+        invalid: "Une adresse commençant par « / », ou une adresse complète en http(s)://."
+    robots:
+        no_sitemap: "Pas de ligne « Sitemap: » : elle est ajoutée seule."

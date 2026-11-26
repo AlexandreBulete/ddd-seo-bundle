@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="AlexandreBulete\DddSeoBundle\Domain\Model\SeoSettings" table="seo_settings">
+        <!-- "key" is a reserved word in MySQL. -->
+        <id name="key" type="string" column="settings_key" length="30"/>
+        <field name="indexing" type="boolean"/>
+        <field name="robotsRules" type="text" column="robots_rules"/>
+        <field name="titlePattern" type="string" column="title_pattern" length="200"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
+    </entity>
+</doctrine-mapping>

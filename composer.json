@@ -1,0 +1,71 @@
+{
+  "name": "alexandrebulete/ddd-seo-bundle",
+  "description": "SEO as a reusable DDD Bounded Context: titles, descriptions, canonical and share tags per page, templates by kind of content, sitemap.xml and robots.txt, edited in a Sylius back office.",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexandre Bulete"
+    }
+  ],
+  "require": {
+    "php": "^8.4",
+    "alexandrebulete/ddd-doctrine-bridge": "^1.4",
+    "alexandrebulete/ddd-foundation": "^1.6",
+    "alexandrebulete/ddd-sylius-bundle": "^1.2",
+    "alexandrebulete/ddd-symfony-bundle": "^1.6",
+    "doctrine/dbal": "^4.3",
+    "doctrine/doctrine-bundle": "^2.13 || ^3.0",
+    "doctrine/doctrine-migrations-bundle": "^3.7 || ^4.0",
+    "doctrine/migrations": "^3.8",
+    "doctrine/orm": "^3.3",
+    "pagerfanta/core": "^4.0",
+    "psr/clock": "^1.0",
+    "psr/event-dispatcher": "^1.0",
+    "sylius/admin-ui": "^0.14",
+    "sylius/grid-bundle": "^1.13",
+    "sylius/resource-bundle": "^1.14",
+    "symfony/clock": "^7.0 || ^8.0",
+    "symfony/config": "^7.0 || ^8.0",
+    "symfony/dependency-injection": "^7.0 || ^8.0",
+    "symfony/form": "^7.0 || ^8.0",
+    "symfony/framework-bundle": "^7.0 || ^8.0",
+    "symfony/http-foundation": "^7.0 || ^8.0",
+    "symfony/routing": "^7.0 || ^8.0",
+    "symfony/security-core": "^7.3 || ^8.0",
+    "symfony/service-contracts": "^3.0",
+    "symfony/translation": "^7.0 || ^8.0",
+    "symfony/translation-contracts": "^3.0",
+    "symfony/uid": "^7.0 || ^8.0",
+    "symfony/validator": "^7.0 || ^8.0",
+    "twig/twig": "^3.10",
+    "webmozart/assert": "^1.11"
+  },
+  "require-dev": {
+    "deptrac/deptrac": "^4.7",
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "phpunit/phpunit": "^12.0 || ^13.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "AlexandreBulete\\DddSeoBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AlexandreBulete\\DddSeoBundle\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "phpstan": "phpstan analyse --no-progress",
+    "deptrac": "deptrac analyse --no-progress",
+    "test": "phpunit",
+    "qa": [
+      "@phpstan",
+      "@deptrac",
+      "@test"
+    ]
+  },
+  "minimum-stability": "stable"
+}

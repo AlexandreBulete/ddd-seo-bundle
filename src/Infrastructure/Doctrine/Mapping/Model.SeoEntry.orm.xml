@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="AlexandreBulete\DddSeoBundle\Domain\Model\SeoEntry" table="seo_entry">
+        <unique-constraints>
+            <unique-constraint name="uniq_seo_entry_target" columns="target_kind,target_reference"/>
+        </unique-constraints>
+        <id name="id" type="seo_entry_id"/>
+        <embedded name="target" class="AlexandreBulete\DddSeoBundle\Domain\ValueObject\SeoTarget" column-prefix="target_"/>
+        <field name="title" type="string" length="120" nullable="true"/>
+        <field name="description" type="string" length="320" nullable="true"/>
+        <field name="canonical" type="string" length="500" nullable="true"/>
+        <field name="noindex" type="boolean"/>
+        <field name="shareTitle" type="string" column="share_title" length="120" nullable="true"/>
+        <field name="shareDescription" type="string" column="share_description" length="320" nullable="true"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,21 @@
+{# The SEO tags of a page's head: seo_head() renders it, a layout may include it with its own `seo` (a SeoView). #}
+<title>{{ seo.title }}</title>
+{% if seo.description %}<meta name="description" content="{{ seo.description }}">
+{% endif %}
+{% if seo.robots %}<meta name="robots" content="{{ seo.robots }}">
+{% endif %}
+{% if seo.canonical and not seo.noindex %}<link rel="canonical" href="{{ seo.canonical }}">
+{% endif %}
+<meta property="og:type" content="{{ seo.type }}">
+<meta property="og:title" content="{{ seo.shareTitle }}">
+{% if seo.shareDescription %}<meta property="og:description" content="{{ seo.shareDescription }}">
+{% endif %}
+{% if seo.canonical %}<meta property="og:url" content="{{ seo.canonical }}">
+{% endif %}
+{% if seo.image %}<meta property="og:image" content="{{ seo.image }}">
+{% endif %}
+{% if seo.siteName %}<meta property="og:site_name" content="{{ seo.siteName }}">
+{% endif %}
+{% if seo.locale %}<meta property="og:locale" content="{{ seo.locale }}">
+{% endif %}
+<meta name="twitter:card" content="{{ seo.image ? 'summary_large_image' : 'summary' }}">

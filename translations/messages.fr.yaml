@@ -1,0 +1,56 @@
+seo:
+    ui:
+        seo_pages: SEO des pages du site
+        seo_page: page
+        edit_seo_page: SEO de la page
+        seo_templates: Modèles SEO
+        seo_template: modèle
+        edit_seo_template: Modèle SEO
+        seo_settings: Réglages SEO
+        edit_seo_settings: Réglages SEO
+    menu:
+        root: SEO
+        pages: Pages du site
+        templates: Modèles
+        settings: Réglages
+    kind:
+        route: Pages du site
+    variable:
+        page_title: titre de la page
+        site: nom du site
+    block: Référencement (SEO)
+    field:
+        title: Titre pour les moteurs
+        title_help: "Vide : le modèle du type de contenu. Visez 50 à 60 caractères, Google coupe au-delà."
+        description: Description pour les moteurs
+        description_help: "Vide : le modèle, sinon le début du texte. Visez 120 à 155 caractères."
+        canonical: Adresse canonique
+        canonical_help: "Vide : l'adresse de la page. Une autre adresse (« /blog/… » ou « https://… ») dit aux moteurs de référencer celle-là à la place, et sort la page du sitemap."
+        noindex: Ne pas référencer cette page
+        noindex_help: "Les moteurs ne l'affichent plus dans leurs résultats ; elle sort du sitemap. Les liens restent suivis."
+        share_title: Titre au partage
+        share_title_help: "Facebook, LinkedIn, WhatsApp… Vide : le titre du contenu."
+        share_description: Texte au partage
+    page:
+        label: Page
+        path: Adresse
+    template:
+        kind: Type de contenu
+        title: Modèle de titre
+        description: Modèle de description
+        title_help: "Variables : %variables%. %empty%"
+        description_help: "Variables : %variables%. %empty%"
+        empty_gives: "Vide : « %pattern% »."
+        title_empty: "Vide : le modèle de titre des réglages."
+        description_empty: "Vide : le début du texte du contenu."
+        title_fallback: (modèle des réglages)
+        description_fallback: (début du texte)
+    settings:
+        indexing: Autoriser les moteurs de recherche
+        indexing_help: "Décoché : tout le site en noindex, robots.txt interdit tout, sitemap vide. Pour une copie de test, ou avant la mise en ligne."
+        indexing_on: Autorisé
+        indexing_off: Interdit
+        title_pattern: Modèle de titre par défaut
+        title_pattern_help: "Pour un type de contenu sans modèle. Variables : {title} (titre de la page), {site} (nom du site)."
+        robots: Règles du robots.txt
+        robots_help: "Le lien vers le sitemap est ajouté seul, à la fin. Vide : tout est permis sauf /admin/."

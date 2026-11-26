@@ -1,0 +1,5 @@
+seo:
+    flash:
+        page_saved: The page's SEO is saved.
+        template_saved: The template is saved.
+        settings_saved: The SEO settings are saved.
