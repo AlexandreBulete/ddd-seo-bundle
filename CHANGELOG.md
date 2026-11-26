@@ -1,3 +1,12 @@
+## [1.1.0] - 2026-11-26
+
+### 🚀 Features
+
+- Structured data (json-ld) per page
+
+### 📚 Documentation
+
+- Update CHANGELOG.md for 1.0.0
 ## [1.0.0] - 2026-11-26
 
 ### 🚀 Features
