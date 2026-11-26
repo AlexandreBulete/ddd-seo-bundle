@@ -31,6 +31,8 @@ seo:
         share_title: Title when shared
         share_title_help: "Facebook, LinkedIn, WhatsApp… Empty: the content's title."
         share_description: Text when shared
+        json_ld: Added structured data (JSON-LD)
+        json_ld_help: "For specialists: a JSON-LD object, or a list of objects, each with its \"@type\". Added to what the site already produces. Check it with Google's rich results test."
     page:
         label: Page
         path: Address
@@ -45,6 +47,8 @@ seo:
         description_empty: "Empty: the start of the content's text."
         title_fallback: (settings pattern)
         description_fallback: (start of the text)
+        structured_data: Structured data (JSON-LD)
+        structured_data_help: "Describes every page of this kind to engines (review and book, post, breadcrumbs). Unticked: only the site's and what was added by hand remain."
     settings:
         indexing: Allow search engines
         indexing_help: "Unticked: the whole site is noindex, robots.txt disallows everything, the sitemap is empty. For a test copy, or before going live."
@@ -54,3 +58,9 @@ seo:
         title_pattern_help: "For a kind of content without a template. Variables: {title} (page title), {site} (site name)."
         robots: robots.txt rules
         robots_help: "The sitemap line is added on its own, at the end. Empty: everything allowed but /admin/."
+        person_name: Your name
+        person_name_help: "The site's author in the structured data (author of reviews and posts). Empty: no author."
+        person_url: Page about you
+        person_url_help: "\"/about\", or a full address."
+        person_same_as: Your profiles elsewhere
+        person_same_as_help: "One address per line (Instagram…): engines link these accounts to you."

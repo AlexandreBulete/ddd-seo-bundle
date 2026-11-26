@@ -16,5 +16,6 @@
         <field name="shareTitle" type="string" column="share_title" length="120" nullable="true"/>
         <field name="shareDescription" type="string" column="share_description" length="320" nullable="true"/>
         <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+        <field name="jsonLd" type="text" column="json_ld" nullable="true"/>
     </entity>
 </doctrine-mapping>

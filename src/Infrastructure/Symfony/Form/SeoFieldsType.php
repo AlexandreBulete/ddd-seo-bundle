@@ -52,6 +52,12 @@ final class SeoFieldsType extends AbstractType
                 'label' => 'seo.field.share_description',
                 'required' => false,
                 'attr' => ['rows' => 2, 'maxlength' => 320],
+            ])
+            ->add('jsonLd', TextareaType::class, [
+                'label' => 'seo.field.json_ld',
+                'required' => false,
+                'help' => 'seo.field.json_ld_help',
+                'attr' => ['rows' => 6, 'spellcheck' => 'false', 'style' => 'font-family: monospace'],
             ]);
     }
 

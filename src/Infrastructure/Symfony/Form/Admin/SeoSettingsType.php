@@ -32,6 +32,22 @@ final class SeoSettingsType extends AbstractType
                 'required' => false,
                 'attr' => ['rows' => 8, 'spellcheck' => 'false'],
                 'help' => 'seo.settings.robots_help',
+            ])
+            ->add('personName', TextType::class, [
+                'label' => 'seo.settings.person_name',
+                'required' => false,
+                'help' => 'seo.settings.person_name_help',
+            ])
+            ->add('personUrl', TextType::class, [
+                'label' => 'seo.settings.person_url',
+                'required' => false,
+                'help' => 'seo.settings.person_url_help',
+            ])
+            ->add('personSameAs', TextareaType::class, [
+                'label' => 'seo.settings.person_same_as',
+                'required' => false,
+                'attr' => ['rows' => 3, 'spellcheck' => 'false'],
+                'help' => 'seo.settings.person_same_as_help',
             ]);
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AlexandreBulete\DddSeoBundle\Tests\Integration;
 
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Migrations\Version20261127140000;
+use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Migrations\Version20261128100000;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Type\SeoEntryIdType;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
@@ -45,12 +46,14 @@ final class SeoDatabase
         }
 
         // What `doctrine:migrations:migrate` does for a Schema API migration.
-        $migration = new Version20261127140000($connection, new NullLogger());
-        $from = $schemaManager->introspectSchema();
-        $to = clone $from;
-        $migration->up($to);
-        foreach ($connection->getDatabasePlatform()->getAlterSchemaSQL($schemaManager->createComparator()->compareSchemas($from, $to)) as $sql) {
-            $connection->executeStatement($sql);
+        foreach ([Version20261127140000::class, Version20261128100000::class] as $class) {
+            $migration = new $class($connection, new NullLogger());
+            $from = $schemaManager->introspectSchema();
+            $to = clone $from;
+            $migration->up($to);
+            foreach ($connection->getDatabasePlatform()->getAlterSchemaSQL($schemaManager->createComparator()->compareSchemas($from, $to)) as $sql) {
+                $connection->executeStatement($sql);
+            }
         }
 
         return new EntityManager($connection, $config);

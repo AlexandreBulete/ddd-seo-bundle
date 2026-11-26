@@ -31,6 +31,8 @@ seo:
         share_title: Titre au partage
         share_title_help: "Facebook, LinkedIn, WhatsApp… Vide : le titre du contenu."
         share_description: Texte au partage
+        json_ld: Données structurées ajoutées (JSON-LD)
+        json_ld_help: "Pour les spécialistes : un objet JSON-LD, ou une liste d'objets, chacun avec son « @type ». Ajouté à ceux que le site produit déjà. Vérifiez avec le test des résultats enrichis de Google."
     page:
         label: Page
         path: Adresse
@@ -45,6 +47,8 @@ seo:
         description_empty: "Vide : le début du texte du contenu."
         title_fallback: (modèle des réglages)
         description_fallback: (début du texte)
+        structured_data: Données structurées (JSON-LD)
+        structured_data_help: "Décrit chaque page de ce type aux moteurs (chronique et livre, article, fil d'Ariane). Décoché : seules celles du site et celles ajoutées à la main restent."
     settings:
         indexing: Autoriser les moteurs de recherche
         indexing_help: "Décoché : tout le site en noindex, robots.txt interdit tout, sitemap vide. Pour une copie de test, ou avant la mise en ligne."
@@ -54,3 +58,9 @@ seo:
         title_pattern_help: "Pour un type de contenu sans modèle. Variables : {title} (titre de la page), {site} (nom du site)."
         robots: Règles du robots.txt
         robots_help: "Le lien vers le sitemap est ajouté seul, à la fin. Vide : tout est permis sauf /admin/."
+        person_name: Votre nom
+        person_name_help: "L'autrice du site dans les données structurées (auteur des chroniques et articles). Vide : pas d'auteur."
+        person_url: Page qui vous présente
+        person_url_help: "« /a-propos », ou une adresse complète."
+        person_same_as: Vos profils ailleurs
+        person_same_as_help: "Une adresse par ligne (Instagram, Babelio…) : les moteurs relient ces comptes à vous."

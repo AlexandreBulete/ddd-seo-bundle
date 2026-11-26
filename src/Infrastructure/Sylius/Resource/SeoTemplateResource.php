@@ -51,6 +51,7 @@ final class SeoTemplateResource implements ResourceInterface
         // For the list: what applies when neither is set.
         public string $titleFallback = '—',
         public string $descriptionFallback = '—',
+        public bool $structuredData = true,
     ) {}
 
     public function getId(): string

@@ -3,3 +3,8 @@ seo:
         invalid: "A path starting with \"/\", or a full http(s):// address."
     robots:
         no_sitemap: "No \"Sitemap:\" line: it is added on its own."
+    json_ld:
+        invalid: "Invalid JSON, or an object without \"@type\"."
+    person:
+        invalid_url: "A path starting with \"/\", or a full http(s):// address."
+        invalid_profile: "\"%link%\" is not an http(s):// address."

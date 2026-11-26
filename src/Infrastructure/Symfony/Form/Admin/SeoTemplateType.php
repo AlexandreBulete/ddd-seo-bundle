@@ -6,6 +6,7 @@ namespace AlexandreBulete\DddSeoBundle\Infrastructure\Symfony\Form\Admin;
 
 use AlexandreBulete\DddSeoBundle\Infrastructure\Sylius\Resource\SeoTemplateResource;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -50,6 +51,11 @@ final class SeoTemplateType extends AbstractType
                     'required' => false,
                     'help' => 'seo.template.description_help',
                     'help_translation_parameters' => ['%variables%' => $variables, '%empty%' => $empty($defaultDescription, 'seo.template.description_empty')],
+                ])
+                ->add('structuredData', CheckboxType::class, [
+                    'label' => 'seo.template.structured_data',
+                    'required' => false,
+                    'help' => 'seo.template.structured_data_help',
                 ]);
         });
     }

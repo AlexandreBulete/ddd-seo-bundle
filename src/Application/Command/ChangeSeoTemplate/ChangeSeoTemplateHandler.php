@@ -27,7 +27,7 @@ final readonly class ChangeSeoTemplateHandler
         }
 
         $template = $this->templates->get($command->kind);
-        $template->change($command->title, $command->description, $this->clock->now());
+        $template->change($command->title, $command->description, $this->clock->now(), $command->structuredData);
         $this->templates->save($template);
 
         return $template;

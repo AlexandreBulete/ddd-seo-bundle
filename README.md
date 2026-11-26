@@ -2,7 +2,7 @@
 
 SEO as a reusable DDD Bounded Context for Symfony: the title, description,
 canonical address and share tags of every page, **templates by kind of
-content**, `sitemap.xml` and `robots.txt` — all edited in a Sylius back office
+content**, **structured data** (JSON-LD), `sitemap.xml` and `robots.txt` — all edited in a Sylius back office
 by whoever takes care of the site's search ranking, without a deploy.
 
 The bundle knows no content. SEO hangs on a **page**: a kind the application
@@ -56,6 +56,7 @@ seo:
         blog: Blog
     forms:                                      # back-office forms that get a SEO block
         App\Library\Infrastructure\Form\BookType: review
+    search: { route: search, parameter: q }     # announced in the structured data
     admin:
         enabled: true                           # false for a headless setup
 ```
@@ -93,14 +94,42 @@ prints them itself. Variables with a meaning of their own:
 | `noindex` | `true` keeps the page out of the engines |
 | `type` | Open Graph type, instead of the kind's |
 | `site`, `locale` | site name, `og:locale` |
+| `schema` | the page's schema.org node (see below) |
+| `breadcrumbs` | its trail: `[{name, url}, …]`, the last one is the page |
 
 Every other variable only fills the templates.
+
+## Structured data
+
+`seo_head()` also prints one JSON-LD `@graph`:
+
+- `WebSite`, with a `SearchAction` when `seo.search` names a route;
+- `Person`, when **SEO → Settings** names who writes the site (with the page
+  about them and their profiles elsewhere);
+- the page's node, from the `schema` variable — built by the template, which
+  knows its content:
+
+  ```twig
+  schema: {'@type': 'Review', name: book.title, reviewRating: {'@type': 'Rating', ratingValue: 4.5, bestRating: 5},
+           itemReviewed: {'@type': 'Book', name: book.title, author: {'@type': 'Person', name: author}}},
+  ```
+
+  The bundle adds its `@id`, `url` and `inLanguage`; the site's person as
+  `author` and `publisher` of an `Article`, `BlogPosting` or `Review`; the
+  site as `isPartOf` of a `…Page`, and the person as `mainEntity` of an
+  `AboutPage`. Empty values are dropped, at any depth;
+- a `BreadcrumbList`, from `breadcrumbs`;
+- what was set by hand on the page (**SEO** block, JSON-LD field): an object
+  or a list of objects, each with its `@type`.
+
+Each kind's template has a switch: off, the page's node and trail are left
+out; the site and what was set by hand stay.
 
 ## The SEO block of a content
 
 Each form listed in `seo.forms` gets a **SEO** block once the content exists
 (its id is the reference): title, description, canonical, noindex, share title
-and text. All empty: the page follows its template again. The form's data
+and text, structured data. All empty: the page follows its template again. The form's data
 must expose the id, as `getId()` or a property `id` (a `Uid` is read in its
 RFC 4122 form, as an `IdentifierVO` prints itself).
 

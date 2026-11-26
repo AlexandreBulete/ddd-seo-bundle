@@ -28,6 +28,7 @@ final class SeoEntry
         public private(set) ?string $shareTitle,
         public private(set) ?string $shareDescription,
         public private(set) \DateTimeImmutable $updatedAt,
+        public private(set) ?string $jsonLd = null,
     ) {}
 
     public static function set(SeoEntryId $id, SeoTarget $target, SeoFields $fields, \DateTimeImmutable $at): self
@@ -59,7 +60,7 @@ final class SeoEntry
 
     public function fields(): SeoFields
     {
-        return new SeoFields($this->title, $this->description, $this->canonical, $this->noindex, $this->shareTitle, $this->shareDescription);
+        return new SeoFields($this->title, $this->description, $this->canonical, $this->noindex, $this->shareTitle, $this->shareDescription, $this->jsonLd);
     }
 
     private function apply(SeoFields $fields): void
@@ -70,5 +71,6 @@ final class SeoEntry
         $this->noindex = $fields->noindex;
         $this->shareTitle = $fields->shareTitle;
         $this->shareDescription = $fields->shareDescription;
+        $this->jsonLd = $fields->jsonLd;
     }
 }

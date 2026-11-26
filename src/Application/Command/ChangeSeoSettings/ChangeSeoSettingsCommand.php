@@ -20,5 +20,9 @@ final readonly class ChangeSeoSettingsCommand implements CommandInterface
         public bool $indexing,
         public ?string $robotsRules,
         public ?string $titlePattern,
+        public ?string $personName = null,
+        public ?string $personUrl = null,
+        /** @var list<string> */
+        public array $personSameAs = [],
     ) {}
 }

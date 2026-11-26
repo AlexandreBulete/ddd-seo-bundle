@@ -24,7 +24,7 @@ final readonly class UpdateSeoSettingsProcessor implements ProcessorInterface
         Assert::isInstanceOf($data, SeoSettingsResource::class);
 
         /** @var SeoSettings $settings */
-        $settings = $this->commandBus->dispatch(new ChangeSeoSettingsCommand($data->indexing, $data->robotsRules, $data->titlePattern));
+        $settings = $this->commandBus->dispatch(new ChangeSeoSettingsCommand($data->indexing, $data->robotsRules, $data->titlePattern, $data->personName, $data->personUrl, $data->sameAsList()));
 
         return SeoSettingsResource::fromModel($settings);
     }

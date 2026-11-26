@@ -26,6 +26,7 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
  *     kinds: array<string, array{label: string, variables: array<string, string>, title: ?string, description: ?string, type: string}>,
  *     routes: array<string, string>,
  *     forms: array<class-string, string>,
+ *     search: array{route: ?string, parameter: string},
  *     admin: array{enabled: bool},
  * }
  */
@@ -64,6 +65,14 @@ final class DddSeoBundle extends AbstractBundle
                     ->useAttributeAsKey('type')
                     ->scalarPrototype()->end()
                 ->end()
+                ->arrayNode('search')
+                    ->info('The site\'s search, announced to engines in the structured data.')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('route')->defaultNull()->info('Route of the results page; null: none.')->end()
+                        ->scalarNode('parameter')->defaultValue('q')->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
                 ->arrayNode('admin')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -85,7 +94,8 @@ final class DddSeoBundle extends AbstractBundle
         $container->parameters()
             ->set('seo.kinds', $config['kinds'])
             ->set('seo.routes', $config['routes'])
-            ->set('seo.forms', $config['forms']);
+            ->set('seo.forms', $config['forms'])
+            ->set('seo.search', $config['search']);
 
         $container->import($this->getPath() . '/config/services.php');
 

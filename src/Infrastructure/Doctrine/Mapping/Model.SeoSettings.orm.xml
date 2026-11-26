@@ -10,5 +10,8 @@
         <field name="robotsRules" type="text" column="robots_rules"/>
         <field name="titlePattern" type="string" column="title_pattern" length="200"/>
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
+        <field name="personName" type="string" column="person_name" length="100" nullable="true"/>
+        <field name="personUrl" type="string" column="person_url" length="500" nullable="true"/>
+        <field name="personSameAs" type="json" column="person_same_as" nullable="true"/>
     </entity>
 </doctrine-mapping>

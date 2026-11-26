@@ -26,7 +26,7 @@ final readonly class UpdateSeoTemplateProcessor implements ProcessorInterface
         Assert::isInstanceOf($data, SeoTemplateResource::class);
 
         /** @var SeoTemplate $template */
-        $template = $this->commandBus->dispatch(new ChangeSeoTemplateCommand($data->id, $data->title, $data->description));
+        $template = $this->commandBus->dispatch(new ChangeSeoTemplateCommand($data->id, $data->title, $data->description, $data->structuredData));
 
         return $this->resources->template($template);
     }

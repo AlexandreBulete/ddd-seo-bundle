@@ -8,5 +8,10 @@
         <field name="title" type="string" length="200" nullable="true"/>
         <field name="description" type="string" length="200" nullable="true"/>
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
+        <field name="structuredData" type="boolean" column="structured_data">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>
     </entity>
 </doctrine-mapping>

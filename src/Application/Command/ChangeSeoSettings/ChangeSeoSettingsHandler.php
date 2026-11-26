@@ -21,6 +21,7 @@ final readonly class ChangeSeoSettingsHandler
     {
         $settings = $this->settings->get();
         $settings->change($command->indexing, $command->robotsRules, $command->titlePattern, $this->clock->now());
+        $settings->describePerson($command->personName, $command->personUrl, $command->personSameAs, $this->clock->now());
         $this->settings->save($settings);
 
         return $settings;

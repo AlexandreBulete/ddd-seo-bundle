@@ -20,6 +20,8 @@ final readonly class SeoView
         public string $type,
         public ?string $siteName,
         public ?string $locale,
+        // JSON-LD, ready for a script tag.
+        public ?string $jsonLd = null,
     ) {}
 
     public function robots(): ?string

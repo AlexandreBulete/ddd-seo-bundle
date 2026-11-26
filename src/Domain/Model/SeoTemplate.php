@@ -12,7 +12,7 @@ use AlexandreBulete\DddFoundation\Domain\Model\RecordsEvents;
  * How the title and description of a kind of content are written when an
  * editor set none: patterns with `{variables}` the application fills
  * (`{title}, {author}: review — {site}`). Null: the application's
- * default for that kind.
+ * default for that kind. Its structured data (JSON-LD) can be turned off.
  */
 final class SeoTemplate
 {
@@ -25,6 +25,7 @@ final class SeoTemplate
         public private(set) ?string $title,
         public private(set) ?string $description,
         public private(set) ?\DateTimeImmutable $updatedAt,
+        public private(set) bool $structuredData = true,
     ) {}
 
     public static function defaults(string $kind): self
@@ -34,15 +35,16 @@ final class SeoTemplate
         return new self($kind, null, null, null);
     }
 
-    public function change(?string $title, ?string $description, \DateTimeImmutable $at): void
+    public function change(?string $title, ?string $description, \DateTimeImmutable $at, bool $structuredData = true): void
     {
         $title = self::pattern($title);
         $description = self::pattern($description);
-        if ($title === $this->title && $description === $this->description) {
+        if ($title === $this->title && $description === $this->description && $structuredData === $this->structuredData) {
             return;
         }
         $this->title = $title;
         $this->description = $description;
+        $this->structuredData = $structuredData;
         $this->updatedAt = $at;
         $this->recordEvent(new SeoTemplateChanged($this->kind));
     }

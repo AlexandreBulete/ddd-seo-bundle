@@ -20,5 +20,6 @@ final readonly class ChangeSeoTemplateCommand implements CommandInterface
         public string $kind,
         public ?string $title,
         public ?string $description,
+        public bool $structuredData = true,
     ) {}
 }

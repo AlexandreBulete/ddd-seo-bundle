@@ -3,3 +3,8 @@ seo:
         invalid: "Une adresse commençant par « / », ou une adresse complète en http(s)://."
     robots:
         no_sitemap: "Pas de ligne « Sitemap: » : elle est ajoutée seule."
+    json_ld:
+        invalid: "JSON invalide, ou un objet sans « @type »."
+    person:
+        invalid_url: "Une adresse commençant par « / », ou une adresse complète en http(s)://."
+        invalid_profile: "« %link% » n'est pas une adresse http(s)://."

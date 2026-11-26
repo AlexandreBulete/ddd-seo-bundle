@@ -18,7 +18,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * - `url`: the canonical address when none was set (else the current one,
  *   without its query string);
  * - `image`: the share image; `noindex`: true keeps the page out;
- * - `site`, `locale`: the site's name and language (`fr_FR`).
+ * - `site`, `locale`: the site's name and language (`fr_FR`);
+ * - `schema`, `breadcrumbs`: the page's structured data ({@see StructuredData}).
  */
 final readonly class SeoRenderer
 {
@@ -27,6 +28,7 @@ final readonly class SeoRenderer
     public function __construct(
         private SeoKinds $kinds,
         private RequestStack $requests,
+        private StructuredData $structuredData,
     ) {}
 
     /**
@@ -50,10 +52,12 @@ final readonly class SeoRenderer
             $description = $description === '' ? null : Pattern::shorten($description, self::DESCRIPTION_MAX_LENGTH);
         }
 
+        $canonical = $this->absolute($fields->canonical ?? $own('url')) ?? $this->current();
+
         return new SeoView(
             title: $title,
             description: $description,
-            canonical: $this->absolute($fields->canonical ?? $own('url')) ?? $this->current(),
+            canonical: $canonical,
             noindex: !$head->settings->indexing || $fields->noindex || ($variables['noindex'] ?? false) === true,
             shareTitle: $fields->shareTitle ?? $own('title') ?? $title,
             shareDescription: $fields->shareDescription ?? $description,
@@ -61,6 +65,7 @@ final readonly class SeoRenderer
             type: $own('type') ?? $this->kinds->type($kind),
             siteName: $own('site'),
             locale: $own('locale'),
+            jsonLd: $this->structuredData->encode($head, $variables, $this->requests->getMainRequest(), $canonical, $own('site'), $own('locale')),
         );
     }
 

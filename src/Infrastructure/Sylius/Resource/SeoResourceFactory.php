@@ -46,6 +46,7 @@ final readonly class SeoResourceFactory
             $template->updatedAt,
             $this->translator->trans('seo.template.title_fallback'),
             $this->translator->trans('seo.template.description_fallback'),
+            $template->structuredData,
         );
     }
 }
