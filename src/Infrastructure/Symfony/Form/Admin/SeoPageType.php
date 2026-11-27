@@ -14,11 +14,16 @@ final class SeoPageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('seo', SeoFieldsType::class, ['label' => false]);
+        $builder->add('seo', SeoFieldsType::class, ['section' => 'seo', 'label' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => SeoPageResource::class]);
+        $resolver->setDefaults([
+            'data_class' => SeoPageResource::class,
+            'sections' => [
+                'seo' => ['label' => 'seo.section.seo'],
+            ],
+        ]);
     }
 }

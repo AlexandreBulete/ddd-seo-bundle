@@ -1,4 +1,12 @@
 seo:
+    section:
+        site: "Le site"
+        person: "L’auteur du site (données structurées)"
+        robots: "robots.txt"
+        seo: "Référencement"
+        template: "Le modèle"
+        structured: "Données structurées"
+        redirect: "La redirection"
     ui:
         seo_pages: SEO des pages du site
         seo_page: page

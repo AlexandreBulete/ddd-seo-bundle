@@ -18,32 +18,39 @@ final class SeoSettingsType extends AbstractType
     {
         $builder
             ->add('indexing', CheckboxType::class, [
+                'section' => 'site',
+                'switch' => true,
                 'label' => 'seo.settings.indexing',
                 'required' => false,
                 'help' => 'seo.settings.indexing_help',
             ])
             ->add('titlePattern', TextType::class, [
+                'section' => 'site',
                 'label' => 'seo.settings.title_pattern',
                 'required' => false,
                 'help' => 'seo.settings.title_pattern_help',
             ])
             ->add('robotsRules', TextareaType::class, [
+                'section' => 'robots',
                 'label' => 'seo.settings.robots',
                 'required' => false,
                 'attr' => ['rows' => 8, 'spellcheck' => 'false'],
                 'help' => 'seo.settings.robots_help',
             ])
             ->add('personName', TextType::class, [
+                'section' => 'person',
                 'label' => 'seo.settings.person_name',
                 'required' => false,
                 'help' => 'seo.settings.person_name_help',
             ])
             ->add('personUrl', TextType::class, [
+                'section' => 'person',
                 'label' => 'seo.settings.person_url',
                 'required' => false,
                 'help' => 'seo.settings.person_url_help',
             ])
             ->add('personSameAs', TextareaType::class, [
+                'section' => 'person',
                 'label' => 'seo.settings.person_same_as',
                 'required' => false,
                 'attr' => ['rows' => 3, 'spellcheck' => 'false'],
@@ -53,6 +60,13 @@ final class SeoSettingsType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => SeoSettingsResource::class]);
+        $resolver->setDefaults([
+            'data_class' => SeoSettingsResource::class,
+            'sections' => [
+                'site' => ['label' => 'seo.section.site'],
+                'person' => ['label' => 'seo.section.person'],
+                'robots' => ['label' => 'seo.section.robots', 'column' => 'side'],
+            ],
+        ]);
     }
 }

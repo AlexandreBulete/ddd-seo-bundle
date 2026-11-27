@@ -15,6 +15,8 @@ use AlexandreBulete\DddSeoBundle\Infrastructure\Sylius\State\Provider\RedirectBu
 use AlexandreBulete\DddSeoBundle\Infrastructure\Sylius\State\Provider\RedirectItemProvider;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Symfony\Form\Admin\RedirectType;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Symfony\Validator\FreeRedirectSource;
+use AlexandreBulete\DddSyliusBundle\Admin\View\AdminRecordInterface;
+use AlexandreBulete\DddSyliusBundle\Admin\View\StatusBadge;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\BulkDelete;
 use Sylius\Resource\Metadata\Create;
@@ -44,7 +46,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
     ],
 )]
 #[FreeRedirectSource]
-final class RedirectResource implements ResourceInterface
+final class RedirectResource implements ResourceInterface, AdminRecordInterface
 {
     public function __construct(
         public ?AbstractUid $id = null,
@@ -106,5 +108,20 @@ final class RedirectResource implements ResourceInterface
     public function originLabel(): string
     {
         return $this->automatic ? 'seo.redirect.origin_automatic' : 'seo.redirect.origin_manual';
+    }
+
+    public function adminLabel(): ?string
+    {
+        return $this->source;
+    }
+
+    public function adminStatus(): ?StatusBadge
+    {
+        return null;
+    }
+
+    public function adminPublicUrl(): ?string
+    {
+        return null;
     }
 }

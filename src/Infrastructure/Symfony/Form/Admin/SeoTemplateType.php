@@ -41,18 +41,22 @@ final class SeoTemplateType extends AbstractType
 
             $event->getForm()
                 ->add('title', TextType::class, [
+                    'section' => 'template',
                     'label' => 'seo.template.title',
                     'required' => false,
                     'help' => 'seo.template.title_help',
                     'help_translation_parameters' => ['%variables%' => $variables, '%empty%' => $empty($defaultTitle, 'seo.template.title_empty')],
                 ])
                 ->add('description', TextType::class, [
+                    'section' => 'template',
                     'label' => 'seo.template.description',
                     'required' => false,
                     'help' => 'seo.template.description_help',
                     'help_translation_parameters' => ['%variables%' => $variables, '%empty%' => $empty($defaultDescription, 'seo.template.description_empty')],
                 ])
                 ->add('structuredData', CheckboxType::class, [
+                    'section' => 'structured',
+                    'switch' => true,
                     'label' => 'seo.template.structured_data',
                     'required' => false,
                     'help' => 'seo.template.structured_data_help',
@@ -62,6 +66,12 @@ final class SeoTemplateType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => SeoTemplateResource::class]);
+        $resolver->setDefaults([
+            'data_class' => SeoTemplateResource::class,
+            'sections' => [
+                'template' => ['label' => 'seo.section.template'],
+                'structured' => ['label' => 'seo.section.structured', 'column' => 'side'],
+            ],
+        ]);
     }
 }

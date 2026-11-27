@@ -9,6 +9,8 @@ use AlexandreBulete\DddSeoBundle\Infrastructure\Sylius\State\Processor\UpdateSeo
 use AlexandreBulete\DddSeoBundle\Infrastructure\Sylius\State\Provider\SeoPageItemProvider;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Symfony\Form\Admin\SeoPageType;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Symfony\Form\SeoFieldsData;
+use AlexandreBulete\DddSyliusBundle\Admin\View\AdminRecordInterface;
+use AlexandreBulete\DddSyliusBundle\Admin\View\StatusBadge;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Update;
@@ -32,7 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Index(grid: SeoPageGrid::class),
     ],
 )]
-final class SeoPageResource implements ResourceInterface
+final class SeoPageResource implements ResourceInterface, AdminRecordInterface
 {
     public function __construct(
         public string $id = '',
@@ -50,5 +52,20 @@ final class SeoPageResource implements ResourceInterface
     public function titleOrDash(): string
     {
         return $this->seo->title ?? '—';
+    }
+
+    public function adminLabel(): ?string
+    {
+        return $this->label === '' ? null : $this->label;
+    }
+
+    public function adminStatus(): ?StatusBadge
+    {
+        return null;
+    }
+
+    public function adminPublicUrl(): ?string
+    {
+        return $this->path;
     }
 }

@@ -1,4 +1,12 @@
 seo:
+    section:
+        site: "The site"
+        person: "The site's author (structured data)"
+        robots: "robots.txt"
+        seo: "Search engines"
+        template: "The template"
+        structured: "Structured data"
+        redirect: "The redirect"
     ui:
         seo_pages: SEO of the site's pages
         seo_page: page

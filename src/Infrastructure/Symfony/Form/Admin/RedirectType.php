@@ -16,11 +16,13 @@ final class RedirectType extends AbstractType
     {
         $builder
             ->add('source', TextType::class, [
+                'section' => 'redirect',
                 'label' => 'seo.redirect.source',
                 'help' => 'seo.redirect.source_help',
                 'attr' => ['maxlength' => 500, 'placeholder' => '/old-address'],
             ])
             ->add('target', TextType::class, [
+                'section' => 'redirect',
                 'label' => 'seo.redirect.target',
                 'help' => 'seo.redirect.target_help',
                 'attr' => ['maxlength' => 500],
@@ -29,6 +31,11 @@ final class RedirectType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => RedirectResource::class]);
+        $resolver->setDefaults([
+            'data_class' => RedirectResource::class,
+            'sections' => [
+                'redirect' => ['label' => 'seo.section.redirect'],
+            ],
+        ]);
     }
 }

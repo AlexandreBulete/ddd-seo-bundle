@@ -9,6 +9,8 @@ use AlexandreBulete\DddSeoBundle\Infrastructure\Sylius\Grid\SeoTemplateGrid;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Sylius\State\Processor\UpdateSeoTemplateProcessor;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Sylius\State\Provider\SeoTemplateItemProvider;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Symfony\Form\Admin\SeoTemplateType;
+use AlexandreBulete\DddSyliusBundle\Admin\View\AdminRecordInterface;
+use AlexandreBulete\DddSyliusBundle\Admin\View\StatusBadge;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Update;
@@ -32,7 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Index(grid: SeoTemplateGrid::class),
     ],
 )]
-final class SeoTemplateResource implements ResourceInterface
+final class SeoTemplateResource implements ResourceInterface, AdminRecordInterface
 {
     /**
      * @param array<string, string> $variables name => what it holds
@@ -67,5 +69,20 @@ final class SeoTemplateResource implements ResourceInterface
     public function effectiveDescription(): string
     {
         return $this->description ?? $this->defaultDescription ?? $this->descriptionFallback;
+    }
+
+    public function adminLabel(): ?string
+    {
+        return $this->label === '' ? null : $this->label;
+    }
+
+    public function adminStatus(): ?StatusBadge
+    {
+        return null;
+    }
+
+    public function adminPublicUrl(): ?string
+    {
+        return null;
     }
 }
