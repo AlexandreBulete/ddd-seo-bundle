@@ -17,10 +17,10 @@
                 <div class="text-warning small mt-1" data-seo-preview-noindex hidden>{{ 'seo.preview.noindex'|trans }}</div>
             </div>
         </div>
-        {% set customized = form.children|filter(c => c.vars.value is not empty and c.vars.value is not same as(false))|length > 0 %}
+        {% set customized = form.children|filter(c => c.vars.checked is defined ? c.vars.checked : c.vars.value is not empty)|length > 0 %}
         {% set invalid = form.children|filter(c => not c.vars.valid)|length > 0 %}
         <details class="seo-fields"{% if customized or invalid %} open{% endif %}>
-            <summary class="btn btn-outline-secondary btn-sm mb-3">{{ 'seo.preview.customize'|trans }}</summary>
+            <summary class="btn btn-sm mb-3">{{ 'seo.preview.customize'|trans }}</summary>
             {% for child in form %}{{ form_row(child) }}{% endfor %}
         </details>
     </div>
