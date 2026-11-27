@@ -1,3 +1,12 @@
+## [1.4.0] - 2026-11-27
+
+### 🚀 Features
+
+- The search preview shows the title and description the page will get
+
+### 📚 Documentation
+
+- Update CHANGELOG.md for 1.3.0
 ## [1.3.0] - 2026-11-27
 
 ### 🚀 Features
