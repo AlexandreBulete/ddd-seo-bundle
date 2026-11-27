@@ -3,3 +3,7 @@ seo:
         page_saved: The page's SEO is saved.
         template_saved: The template is saved.
         settings_saved: The SEO settings are saved.
+        redirect_added: The redirect is saved.
+        redirect_saved: The redirect is saved.
+        redirect_removed: The redirect is removed.
+        redirects_removed: The redirects are removed.

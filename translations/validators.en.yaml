@@ -8,3 +8,8 @@ seo:
     person:
         invalid_url: "A path starting with \"/\", or a full http(s):// address."
         invalid_profile: "\"%link%\" is not an http(s):// address."
+    redirect:
+        invalid_source: "An address of this site, starting with \"/\", other than the home page."
+        invalid_target: "An address starting with \"/\", or a full http(s):// address."
+        to_itself: "The new address is the old one."
+        source_taken: "This address is already redirected, to \"%target%\"."

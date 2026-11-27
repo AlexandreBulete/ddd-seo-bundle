@@ -6,6 +6,8 @@ namespace AlexandreBulete\DddSeoBundle\Tests\Integration;
 
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Migrations\Version20261127140000;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Migrations\Version20261128100000;
+use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Migrations\Version20261129100000;
+use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Type\RedirectIdType;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Type\SeoEntryIdType;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
@@ -26,7 +28,7 @@ final class SeoDatabase
 {
     public static function migrated(): EntityManagerInterface
     {
-        foreach ([SeoEntryIdType::NAME => SeoEntryIdType::class] as $name => $class) {
+        foreach ([SeoEntryIdType::NAME => SeoEntryIdType::class, RedirectIdType::NAME => RedirectIdType::class] as $name => $class) {
             if (!Type::hasType($name)) {
                 Type::addType($name, $class);
             }
@@ -46,7 +48,7 @@ final class SeoDatabase
         }
 
         // What `doctrine:migrations:migrate` does for a Schema API migration.
-        foreach ([Version20261127140000::class, Version20261128100000::class] as $class) {
+        foreach ([Version20261127140000::class, Version20261128100000::class, Version20261129100000::class] as $class) {
             $migration = new $class($connection, new NullLogger());
             $from = $schemaManager->introspectSchema();
             $to = clone $from;

@@ -8,3 +8,8 @@ seo:
     person:
         invalid_url: "Une adresse commençant par « / », ou une adresse complète en http(s)://."
         invalid_profile: "« %link% » n'est pas une adresse http(s)://."
+    redirect:
+        invalid_source: "Une adresse de ce site, commençant par « / », autre que l'accueil."
+        invalid_target: "Une adresse commençant par « / », ou une adresse complète en http(s)://."
+        to_itself: "La nouvelle adresse est l'ancienne."
+        source_taken: "Cette adresse est déjà redirigée, vers « %target% »."

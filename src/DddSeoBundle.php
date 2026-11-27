@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AlexandreBulete\DddSeoBundle;
 
+use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Type\RedirectIdType;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\Type\SeoEntryIdType;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Sitemap\SitemapSourceInterface;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
@@ -129,7 +130,7 @@ final class DddSeoBundle extends AbstractBundle
         }
 
         $builder->prependExtensionConfig('doctrine', [
-            'dbal' => ['types' => [SeoEntryIdType::NAME => SeoEntryIdType::class]],
+            'dbal' => ['types' => [SeoEntryIdType::NAME => SeoEntryIdType::class, RedirectIdType::NAME => RedirectIdType::class]],
             'orm' => [
                 'mappings' => [
                     'Seo' => [
@@ -156,6 +157,8 @@ final class DddSeoBundle extends AbstractBundle
             $builder->prependExtensionConfig('sylius_resource', [
                 'mapping' => ['paths' => [$this->getPath() . '/src/Infrastructure/Sylius/Resource']],
             ]);
+            // The SEO block: a Google preview and character counters.
+            $builder->prependExtensionConfig('twig', ['form_themes' => ['@DddSeo/form/seo_fields.html.twig']]);
         }
     }
 

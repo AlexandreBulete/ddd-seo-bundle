@@ -3,3 +3,7 @@ seo:
         page_saved: Le SEO de la page est enregistré.
         template_saved: Le modèle est enregistré.
         settings_saved: Les réglages SEO sont enregistrés.
+        redirect_added: La redirection est enregistrée.
+        redirect_saved: La redirection est enregistrée.
+        redirect_removed: La redirection est supprimée.
+        redirects_removed: Les redirections sont supprimées.

@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use AlexandreBulete\DddSeoBundle\Domain\Repository\RedirectRepositoryInterface;
 use AlexandreBulete\DddSeoBundle\Domain\Repository\SeoEntryRepositoryInterface;
 use AlexandreBulete\DddSeoBundle\Domain\Repository\SeoSettingsRepositoryInterface;
 use AlexandreBulete\DddSeoBundle\Domain\Repository\SeoTemplateRepositoryInterface;
 use AlexandreBulete\DddSeoBundle\Domain\Service\DomainEventPublisherInterface;
 use AlexandreBulete\DddSeoBundle\Domain\Service\SeoKindCatalogInterface;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Config\SeoKinds;
+use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\DoctrineRedirectRepository;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\DoctrineSeoEntryRepository;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\DoctrineSeoSettingsRepository;
 use AlexandreBulete\DddSeoBundle\Infrastructure\Doctrine\DoctrineSeoTemplateRepository;
@@ -33,6 +35,7 @@ return static function (ContainerConfigurator $container): void {
             $src . '/Infrastructure/Doctrine/Migrations',
             $src . '/Infrastructure/Sylius',
             $src . '/Infrastructure/Symfony/Form',
+            $src . '/Infrastructure/Symfony/Validator',
             // Data, not services.
             $src . '/Application/Query/FindSeoHead/SeoHead.php',
             $src . '/Application/Query/FindSitemapExclusions/SitemapExclusions.php',
@@ -49,6 +52,7 @@ return static function (ContainerConfigurator $container): void {
     $services->alias(SeoEntryRepositoryInterface::class, DoctrineSeoEntryRepository::class);
     $services->alias(SeoTemplateRepositoryInterface::class, DoctrineSeoTemplateRepository::class);
     $services->alias(SeoSettingsRepositoryInterface::class, DoctrineSeoSettingsRepository::class);
+    $services->alias(RedirectRepositoryInterface::class, DoctrineRedirectRepository::class);
     $services->alias(SeoKindCatalogInterface::class, SeoKinds::class);
     $services->alias(DomainEventPublisherInterface::class, ImmediateEventPublisher::class);
 };

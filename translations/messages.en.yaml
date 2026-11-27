@@ -8,10 +8,15 @@ seo:
         edit_seo_template: SEO template
         seo_settings: SEO settings
         edit_seo_settings: SEO settings
+        redirects: Redirects
+        redirect: redirect
+        new_redirect: New redirect
+        edit_redirect: Redirect
     menu:
         root: SEO
         pages: Site pages
         templates: Templates
+        redirects: Redirects
         settings: Settings
     kind:
         route: Site pages
@@ -64,3 +69,20 @@ seo:
         person_url_help: "\"/about\", or a full address."
         person_same_as: Your profiles elsewhere
         person_same_as_help: "One address per line (Instagram…): engines link these accounts to you."
+    redirect:
+        source: Old address
+        source_help: "Starts with \"/\": the address that no longer answers (\"/blog/old-title\"). No domain, no \"?…\"."
+        target: New address
+        target_help: "\"/…\" on this site, or a full https:// address. Visitors and engines are sent there (301)."
+        search: Address containing
+        origin: Origin
+        origin_automatic: Address change
+        origin_manual: By hand
+        hits: Visits
+        last_hit_at: Last visit
+    preview:
+        label: Google preview
+        title_empty: "Title from this content type's template"
+        description_empty: "Template description, or the start of the text"
+        count: "%count% / %limit% characters advised"
+        noindex: "Not indexed: this page will not show in results."

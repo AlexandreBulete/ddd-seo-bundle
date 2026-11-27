@@ -1,0 +1,63 @@
+{#
+ # The SEO block, with what a search result would look like: the typed title
+ # and description, or what stands in for them when left empty. Counters
+ # follow Google's usual cut (about 60 and 155 characters).
+ #}
+{% block seo_fields_widget %}
+    <div data-seo-preview
+         data-title-empty="{{ 'seo.preview.title_empty'|trans }}"
+         data-description-empty="{{ 'seo.preview.description_empty'|trans }}"
+         data-count="{{ 'seo.preview.count'|trans }}">
+        <div class="mb-3">
+            <div class="form-label">{{ 'seo.preview.label'|trans }}</div>
+            <div class="border rounded p-3" style="max-width: 600px; font-family: arial, sans-serif; background: var(--tblr-bg-surface, #fff)">
+                <div class="text-secondary small text-truncate" data-seo-preview-url>{{ app.request.host }}</div>
+                <div data-seo-preview-title style="color: #1a0dab; font-size: 20px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap"></div>
+                <div data-seo-preview-description style="color: #4d5156; font-size: 14px; line-height: 1.58; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden"></div>
+                <div class="text-warning small mt-1" data-seo-preview-noindex hidden>{{ 'seo.preview.noindex'|trans }}</div>
+            </div>
+        </div>
+        {% for child in form %}{{ form_row(child) }}{% endfor %}
+    </div>
+    <script>
+        (() => {
+            const root = document.currentScript.previousElementSibling;
+            if (!root || root.dataset.seoPreviewReady) return;
+            root.dataset.seoPreviewReady = '1';
+            const field = (name) => root.querySelector('[name$="[' + name + ']"]');
+            const title = field('title'), description = field('description'), canonical = field('canonical'), noindex = field('noindex');
+            const counter = (input, limit) => {
+                const out = document.createElement('div');
+                out.className = 'form-text';
+                input.insertAdjacentElement('afterend', out);
+                return () => {
+                    const length = [...input.value.trim()].length;
+                    out.textContent = root.dataset.count.replace('%count%', length).replace('%limit%', limit);
+                    out.classList.toggle('text-danger', length > limit);
+                };
+            };
+            const updates = [];
+            if (title) updates.push(counter(title, 60));
+            if (description) updates.push(counter(description, 155));
+            const show = (selector, value, empty) => {
+                const node = root.querySelector(selector);
+                node.textContent = value || empty;
+                node.style.fontStyle = value ? '' : 'italic';
+                node.style.opacity = value ? '' : '.6';
+            };
+            const url = root.querySelector('[data-seo-preview-url]');
+            const host = url.textContent;
+            const render = () => {
+                updates.forEach((update) => update());
+                show('[data-seo-preview-title]', title?.value.trim(), root.dataset.titleEmpty);
+                show('[data-seo-preview-description]', description?.value.trim(), root.dataset.descriptionEmpty);
+                const target = canonical?.value.trim() ?? '';
+                url.textContent = target === '' ? host : target.startsWith('/') ? host + ' › ' + target.replace(/^\/+/, '').split('/').join(' › ') : target;
+                root.querySelector('[data-seo-preview-noindex]').hidden = !noindex?.checked;
+            };
+            root.addEventListener('input', render);
+            root.addEventListener('change', render);
+            render();
+        })();
+    </script>
+{% endblock %}

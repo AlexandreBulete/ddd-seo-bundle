@@ -2,7 +2,7 @@
 
 SEO as a reusable DDD Bounded Context for Symfony: the title, description,
 canonical address and share tags of every page, **templates by kind of
-content**, **structured data** (JSON-LD), `sitemap.xml` and `robots.txt` — all edited in a Sylius back office
+content**, **structured data** (JSON-LD), **permanent redirects**, `sitemap.xml` and `robots.txt` — all edited in a Sylius back office
 by whoever takes care of the site's search ranking, without a deploy.
 
 The bundle knows no content. SEO hangs on a **page**: a kind the application
@@ -133,6 +133,42 @@ and text, structured data. All empty: the page follows its template again. The f
 must expose the id, as `getId()` or a property `id` (a `Uid` is read in its
 RFC 4122 form, as an `IdentifierVO` prints itself).
 
+Above the fields, a **Google preview** follows what is typed (title,
+description, canonical address, noindex), with counters against the usual
+cut: about 60 characters for a title, 155 for a description. It is a form
+theme (`@DddSeo/form/seo_fields.html.twig`), registered with the admin.
+
+## Redirects
+
+A redirect sends an old address of the site to a new one, for good (301):
+a path of this site to a path or an `http(s)://` address. It answers **only
+where the site answers 404**, on GET and HEAD: a redirect never hides a page
+that exists. The query string follows, unless the target has its own.
+
+- **No chains**: whatever led to the old address now leads to the new one; a
+  visitor is sent once.
+- **Back to an old address**: its redirect is dropped, the page answers again.
+- Each redirect counts its visits: one nobody follows any more can go.
+
+The back office lists them, by hand or automatic (**SEO → Redirects**). The
+bundle knows no content, so the application adds the automatic ones, when a
+content's address changes — from a listener on its own event:
+
+```php
+#[AsEventListener]
+public function onPost(PostSlugChanged $event): void
+{
+    $this->commandBus->dispatch(new AddRedirectCommand(
+        new RedirectSource($this->urls->generate('post', ['slug' => $event->previousSlug])),
+        new RedirectTarget($this->urls->generate('post', ['slug' => $event->slug])),
+        automatic: true,
+    ));
+}
+```
+
+Dispatched within the content's use case, the command runs as the system:
+whoever renamed the content needs no redirect permission.
+
 ## The sitemap
 
 One `SitemapSourceInterface` per kind, in the application — only what a
@@ -157,12 +193,15 @@ canonical points elsewhere, is left out.
 
 ## Use cases
 
-Commands: `SaveSeoEntry`, `ChangeSeoTemplate`, `ChangeSeoSettings`.
+Commands: `SaveSeoEntry`, `ChangeSeoTemplate`, `ChangeSeoSettings`,
+`AddRedirect`, `ChangeRedirect`, `RemoveRedirect`, `FollowRedirect`
+(`#[PublicAccess]`).
 Queries: `FindSeoHead` and `FindSitemapExclusions` (`#[PublicAccess]`),
-`FindSeoEntry`, `FindSeoEntries`, `FindSeoTemplate`, `FindSeoSettings`.
+`FindSeoEntry`, `FindSeoEntries`, `FindSeoTemplate`, `FindSeoSettings`,
+`FindRedirect`, `FindRedirects`.
 
-Permissions: `seo.edit` (a page's SEO, the fixed pages) and `seo.configure`
-(templates, settings).
+Permissions: `seo.edit` (a page's SEO, the fixed pages), `seo.configure`
+(templates, settings) and `seo.redirect` (redirects).
 
 ## Seams
 
@@ -174,6 +213,7 @@ Ports bound in `config/services.php`, to rebind in the application:
 | `SeoEntryRepositoryInterface` | Doctrine | another storage |
 | `SeoTemplateRepositoryInterface` | Doctrine | another storage |
 | `SeoSettingsRepositoryInterface` | Doctrine | another storage |
+| `RedirectRepositoryInterface` | Doctrine | another storage |
 
 ## Development
 

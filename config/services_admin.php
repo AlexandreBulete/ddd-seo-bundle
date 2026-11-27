@@ -21,7 +21,11 @@ return static function (ContainerConfigurator $container): void {
             $src . '/Infrastructure/Sylius/Resource/SeoPageResource.php',
             $src . '/Infrastructure/Sylius/Resource/SeoTemplateResource.php',
             $src . '/Infrastructure/Sylius/Resource/SeoSettingsResource.php',
+            $src . '/Infrastructure/Sylius/Resource/RedirectResource.php',
         ]);
     $services->load('AlexandreBulete\DddSeoBundle\\Infrastructure\\Symfony\\Form\\', $src . '/Infrastructure/Symfony/Form/')
         ->exclude([$src . '/Infrastructure/Symfony/Form/SeoFieldsData.php']);
+
+    $services->load('AlexandreBulete\DddSeoBundle\\Infrastructure\\Symfony\\Validator\\', $src . '/Infrastructure/Symfony/Validator/')
+        ->exclude([$src . '/Infrastructure/Symfony/Validator/FreeRedirectSource.php']);
 };

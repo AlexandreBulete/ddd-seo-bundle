@@ -8,10 +8,15 @@ seo:
         edit_seo_template: Modèle SEO
         seo_settings: Réglages SEO
         edit_seo_settings: Réglages SEO
+        redirects: Redirections
+        redirect: redirection
+        new_redirect: Nouvelle redirection
+        edit_redirect: Redirection
     menu:
         root: SEO
         pages: Pages du site
         templates: Modèles
+        redirects: Redirections
         settings: Réglages
     kind:
         route: Pages du site
@@ -48,7 +53,7 @@ seo:
         title_fallback: (modèle des réglages)
         description_fallback: (début du texte)
         structured_data: Données structurées (JSON-LD)
-        structured_data_help: "Décrit chaque page de ce type aux moteurs (chronique et livre, article, fil d'Ariane). Décoché : seules celles du site et celles ajoutées à la main restent."
+        structured_data_help: "Décrit chaque page de ce type aux moteurs (livre, article, fil d’Ariane…). Décoché : seules celles du site et celles ajoutées à la main restent."
     settings:
         indexing: Autoriser les moteurs de recherche
         indexing_help: "Décoché : tout le site en noindex, robots.txt interdit tout, sitemap vide. Pour une copie de test, ou avant la mise en ligne."
@@ -59,8 +64,25 @@ seo:
         robots: Règles du robots.txt
         robots_help: "Le lien vers le sitemap est ajouté seul, à la fin. Vide : tout est permis sauf /admin/."
         person_name: Votre nom
-        person_name_help: "L'autrice du site dans les données structurées (auteur des chroniques et articles). Vide : pas d'auteur."
+        person_name_help: "La personne derrière le site, dans les données structurées (auteur des contenus). Vide : pas d'auteur."
         person_url: Page qui vous présente
         person_url_help: "« /a-propos », ou une adresse complète."
         person_same_as: Vos profils ailleurs
         person_same_as_help: "Une adresse par ligne (Instagram, Babelio…) : les moteurs relient ces comptes à vous."
+    redirect:
+        source: Ancienne adresse
+        source_help: "Commence par « / » : l'adresse qui ne répond plus (« /blog/ancien-titre »). Sans le domaine, sans « ?… »."
+        target: Nouvelle adresse
+        target_help: "« /… » sur ce site, ou une adresse complète en https://. Les visiteurs et les moteurs y sont envoyés (301)."
+        search: Adresse contenant
+        origin: Origine
+        origin_automatic: Changement d'adresse
+        origin_manual: À la main
+        hits: Visites
+        last_hit_at: Dernière visite
+    preview:
+        label: Aperçu dans Google
+        title_empty: "Titre du modèle de ce type de contenu"
+        description_empty: "Description du modèle, ou début du texte"
+        count: "%count% / %limit% caractères conseillés"
+        noindex: "Pas référencée : cette page n'apparaîtra pas dans les résultats."
