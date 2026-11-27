@@ -1,3 +1,16 @@
+## [1.3.0] - 2026-11-27
+
+### 🚀 Features
+
+- The seo block as its own card, fields behind customize
+
+### 📚 Documentation
+
+- Update CHANGELOG.md for 1.2.0
+
+### ⚙️ Miscellaneous Tasks
+
+- Requires ddd-sylius-bundle 1.5 for its card
 ## [1.2.0] - 2026-11-27
 
 ### 🚀 Features
