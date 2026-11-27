@@ -24,6 +24,7 @@ seo:
         page_title: page title
         site: site name
     block: Search engines (SEO)
+    block_help: "Empty: the content type's template applies."
     field:
         title: Title for search engines
         title_help: "Empty: the template of the kind of content. Aim for 50 to 60 characters, Google cuts beyond."
@@ -81,6 +82,7 @@ seo:
         hits: Visits
         last_hit_at: Last visit
     preview:
+        customize: Customize
         label: Google preview
         title_empty: "Title from this content type's template"
         description_empty: "Template description, or the start of the text"

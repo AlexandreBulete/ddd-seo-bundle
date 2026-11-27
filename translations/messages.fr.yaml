@@ -24,6 +24,7 @@ seo:
         page_title: titre de la page
         site: nom du site
     block: Référencement (SEO)
+    block_help: "Vide : le modèle du type de contenu s'applique."
     field:
         title: Titre pour les moteurs
         title_help: "Vide : le modèle du type de contenu. Visez 50 à 60 caractères, Google coupe au-delà."
@@ -81,6 +82,7 @@ seo:
         hits: Visites
         last_hit_at: Dernière visite
     preview:
+        customize: Personnaliser
         label: Aperçu dans Google
         title_empty: "Titre du modèle de ce type de contenu"
         description_empty: "Description du modèle, ou début du texte"

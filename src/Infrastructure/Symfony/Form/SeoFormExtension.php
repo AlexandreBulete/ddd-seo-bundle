@@ -65,6 +65,9 @@ final class SeoFormExtension extends AbstractTypeExtension
                 'mapped' => false,
                 'required' => false,
                 'data' => SeoFieldsData::fromFields($fields),
+                // Its own card in a sectioned back-office form (ddd-sylius-bundle).
+                'section' => 'seo',
+                'section_help' => 'seo.block_help',
             ]);
         });
 
