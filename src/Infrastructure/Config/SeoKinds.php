@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * The kinds of pages, from `seo.kinds`, plus `route`: the application's fixed
  * pages (`seo.routes`), whose reference is the route name.
  *
- * @phpstan-type Kind array{label: string, variables: array<string, string>, title: ?string, description: ?string, type: string}
+ * @phpstan-type Kind array{label: string, variables: array<string, string>, title: ?string, description: ?string, type: string, preview?: array<string, list<string>>}
  */
 final readonly class SeoKinds implements SeoKindCatalogInterface
 {
@@ -68,6 +68,16 @@ final readonly class SeoKinds implements SeoKindCatalogInterface
     public function variables(string $kind): array
     {
         return $this->kinds[$kind]['variables'] ?? [];
+    }
+
+    /**
+     * Where the back-office preview finds each variable: name => form fields.
+     *
+     * @return array<string, list<string>>
+     */
+    public function preview(string $kind): array
+    {
+        return $this->kinds[$kind]['preview'] ?? [];
     }
 
     public function defaultTitle(string $kind): ?string

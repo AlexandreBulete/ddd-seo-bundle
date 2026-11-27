@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace AlexandreBulete\DddSeoBundle\Infrastructure\Symfony\Form;
 
 use AlexandreBulete\DddSeoBundle\Application\Command\SaveSeoEntry\SaveSeoEntryCommand;
-use AlexandreBulete\DddSeoBundle\Application\Query\FindSeoEntry\FindSeoEntryQuery;
-use AlexandreBulete\DddSeoBundle\Domain\ValueObject\SeoFields;
+use AlexandreBulete\DddSeoBundle\Application\Query\FindSeoHead\FindSeoHeadQuery;
+use AlexandreBulete\DddSeoBundle\Application\Query\FindSeoHead\SeoHead;
+use AlexandreBulete\DddSeoBundle\Infrastructure\Config\SeoKinds;
 use AlexandreBulete\DddSeoBundle\Domain\ValueObject\SeoTarget;
 use AlexandreBulete\DddFoundation\Application\Command\CommandBusInterface;
 use AlexandreBulete\DddFoundation\Application\Query\QueryBusInterface;
@@ -40,6 +41,8 @@ final class SeoFormExtension extends AbstractTypeExtension
         private readonly array $forms,
         private readonly QueryBusInterface $queryBus,
         private readonly CommandBusInterface $commandBus,
+        private readonly SeoKinds $kinds,
+        private readonly ?SeoPreviewVariablesInterface $previewVariables = null,
     ) {}
 
     public static function getExtendedTypes(): iterable
@@ -59,12 +62,13 @@ final class SeoFormExtension extends AbstractTypeExtension
             if ($reference === null) {
                 return;
             }
-            /** @var SeoFields $fields */
-            $fields = $this->queryBus->ask(new FindSeoEntryQuery(new SeoTarget($kind, $reference)));
+            /** @var SeoHead $head */
+            $head = $this->queryBus->ask(new FindSeoHeadQuery(new SeoTarget($kind, $reference)));
             $event->getForm()->add(self::FIELD, SeoFieldsType::class, [
                 'mapped' => false,
                 'required' => false,
-                'data' => SeoFieldsData::fromFields($fields),
+                'data' => SeoFieldsData::fromFields($head->fields),
+                'preview' => $this->preview($kind, $head),
                 // Its own card in a sectioned back-office form (ddd-sylius-bundle).
                 'section' => 'seo',
                 'section_help' => 'seo.block_help',
@@ -88,6 +92,22 @@ final class SeoFormExtension extends AbstractTypeExtension
                 self::error($seo, $e->getMessage());
             }
         }, -10);
+    }
+
+    /**
+     * What the page would show with nothing set by hand: the patterns that
+     * apply, and where the preview reads their variables.
+     *
+     * @return array{title: string, description: ?string, fields: array<string, list<string>>, variables: array<string, string>}
+     */
+    private function preview(string $kind, SeoHead $head): array
+    {
+        return [
+            'title' => $head->template->title ?? $this->kinds->defaultTitle($kind) ?? $head->settings->titlePattern,
+            'description' => $head->template->description ?? $this->kinds->defaultDescription($kind),
+            'fields' => $this->kinds->preview($kind),
+            'variables' => $this->previewVariables?->variables() ?? [],
+        ];
     }
 
     /**

@@ -7,7 +7,8 @@
     <div data-seo-preview
          data-title-empty="{{ 'seo.preview.title_empty'|trans }}"
          data-description-empty="{{ 'seo.preview.description_empty'|trans }}"
-         data-count="{{ 'seo.preview.count'|trans }}">
+         data-count="{{ 'seo.preview.count'|trans }}"
+         {% if preview %}data-preview="{{ preview|json_encode }}"{% endif %}>
         <div class="mb-3">
             <div class="form-label">{{ 'seo.preview.label'|trans }}</div>
             <div class="border rounded p-3" style="max-width: 600px; font-family: arial, sans-serif; background: var(--tblr-bg-surface, #fff)">
@@ -30,6 +31,32 @@
             if (!root || root.dataset.seoPreviewReady) return;
             root.dataset.seoPreviewReady = '1';
             const field = (name) => root.querySelector('[name$="[' + name + ']"]');
+            // What the page shows with nothing set by hand: the pattern,
+            // filled from the content's own fields as they are typed.
+            const preview = root.dataset.preview ? JSON.parse(root.dataset.preview) : null;
+            const form = root.closest('form');
+            const prefix = (field('title')?.name ?? '').replace(/\[[^\]]*\]\[[^\]]*\]$/, '');
+            const read = (name) => (form?.querySelector('[name="' + prefix + '[' + name + ']"]')?.value ?? '').trim();
+            const variable = (name) => name === 'description'
+                ? (preview.fields.description ?? []).map(read).find((v) => v !== '') ?? ''
+                : (preview.fields[name] ?? []).map(read).filter((v) => v !== '').join(' ') || (preview.variables[name] ?? '');
+            const fill = (pattern) => pattern
+                .replace(/\{\s*([a-z][a-z0-9_]*)\s*\}/gi, (m, name) => variable(name))
+                .replace(/\s*[,;:]\s*(?=[–—|·-]|$)/gu, ' ')
+                .replace(/\s+/gu, ' ')
+                .replace(/^[\s,;:·|–—-]+|[\s,;:·|–—-]+$/gu, '');
+            const plain = (text) => text.replace(/[#*_>`~\[\]]|\(https?:[^)]*\)/g, '').replace(/\s+/g, ' ').trim();
+            const shorten = (text, max) => {
+                if ([...text].length <= max) return text;
+                const cut = text.slice(0, max - 1), space = cut.lastIndexOf(' ');
+                return (space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,;:·|–—.-]+$/u, '') + '…';
+            };
+            const fallbackTitle = () => preview ? fill(preview.title) || (preview.variables.site ?? '') : '';
+            const fallbackDescription = () => {
+                if (!preview) return '';
+                const text = preview.description !== null ? fill(preview.description) : plain(variable('description'));
+                return text === '' ? '' : shorten(text, 160);
+            };
             const title = field('title'), description = field('description'), canonical = field('canonical'), noindex = field('noindex');
             const counter = (input, limit) => {
                 const out = document.createElement('div');
@@ -44,24 +71,24 @@
             const updates = [];
             if (title) updates.push(counter(title, 60));
             if (description) updates.push(counter(description, 155));
-            const show = (selector, value, empty) => {
+            const show = (selector, value, fallback, empty) => {
                 const node = root.querySelector(selector);
-                node.textContent = value || empty;
-                node.style.fontStyle = value ? '' : 'italic';
-                node.style.opacity = value ? '' : '.6';
+                node.textContent = value || fallback || empty;
+                node.style.fontStyle = value || fallback ? '' : 'italic';
+                node.style.opacity = value || fallback ? '' : '.6';
             };
             const url = root.querySelector('[data-seo-preview-url]');
             const host = url.textContent;
             const render = () => {
                 updates.forEach((update) => update());
-                show('[data-seo-preview-title]', title?.value.trim(), root.dataset.titleEmpty);
-                show('[data-seo-preview-description]', description?.value.trim(), root.dataset.descriptionEmpty);
+                show('[data-seo-preview-title]', title?.value.trim(), fallbackTitle(), root.dataset.titleEmpty);
+                show('[data-seo-preview-description]', description?.value.trim(), fallbackDescription(), root.dataset.descriptionEmpty);
                 const target = canonical?.value.trim() ?? '';
                 url.textContent = target === '' ? host : target.startsWith('/') ? host + ' › ' + target.replace(/^\/+/, '').split('/').join(' › ') : target;
                 root.querySelector('[data-seo-preview-noindex]').hidden = !noindex?.checked;
             };
-            root.addEventListener('input', render);
-            root.addEventListener('change', render);
+            (form ?? root).addEventListener('input', render);
+            (form ?? root).addEventListener('change', render);
             render();
         })();
     </script>

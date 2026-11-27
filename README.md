@@ -51,6 +51,10 @@ seo:
                 title: book title
                 author: author
                 site: site name
+            preview:                            # back-office preview: the form
+                title: title                    # field(s) holding each variable
+                author: [firstName, lastName]   # joined by a space
+                description: [summary, body]    # the first one filled
     routes:                                     # fixed pages: route => label
         home: Home
         blog: Blog
@@ -63,6 +67,26 @@ seo:
 
 The `route` kind is built in: its pages are `seo.routes`, listed on the
 back-office screen **SEO → Site pages**.
+
+## The search preview
+
+The SEO block of a back-office form shows the page as a search result. Left
+empty, a field shows what the page will really get: the pattern that applies,
+filled as the form is typed from the fields listed in the kind's `preview`.
+Variables that are not in the form, the same for every page — the site's
+name — come from a service of the application:
+
+```php
+final readonly class SeoPreviewSite implements SeoPreviewVariablesInterface
+{
+    public function variables(): array
+    {
+        return ['site' => 'My site'];
+    }
+}
+// config/services.php
+$services->alias(SeoPreviewVariablesInterface::class, SeoPreviewSite::class);
+```
 
 ## In the layout
 

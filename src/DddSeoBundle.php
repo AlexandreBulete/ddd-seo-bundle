@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
  * and, for the sitemap, one `SitemapSourceInterface` per kind.
  *
  * @phpstan-type SeoConfig array{
- *     kinds: array<string, array{label: string, variables: array<string, string>, title: ?string, description: ?string, type: string}>,
+ *     kinds: array<string, array{label: string, variables: array<string, string>, title: ?string, description: ?string, type: string, preview?: array<string, list<string>>}>,
  *     routes: array<string, string>,
  *     forms: array<class-string, string>,
  *     search: array{route: ?string, parameter: string},
@@ -53,6 +53,14 @@ final class DddSeoBundle extends AbstractBundle
                             ->scalarNode('title')->defaultNull()->info('Title pattern when none is saved; null: the site\'s.')->end()
                             ->scalarNode('description')->defaultNull()->info('Description pattern when none is saved; null: the content\'s own description.')->end()
                             ->scalarNode('type')->defaultValue('website')->info('Open Graph type.')->end()
+                            ->arrayNode('preview')
+                                ->info('Back-office preview: variable => the form field(s) holding it, joined by a space. `description`: the fields whose text stands in for the description, the first one filled.')
+                                ->useAttributeAsKey('name')
+                                ->arrayPrototype()
+                                    ->beforeNormalization()->castToArray()->end()
+                                    ->scalarPrototype()->end()
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()

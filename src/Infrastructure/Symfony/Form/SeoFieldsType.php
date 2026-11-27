@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -66,6 +68,13 @@ final class SeoFieldsType extends AbstractType
         $resolver->setDefaults([
             'data_class' => SeoFieldsData::class,
             'label' => 'seo.block',
+            'preview' => null,
         ]);
+        $resolver->setAllowedTypes('preview', ['null', 'array']);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['preview'] = $options['preview'];
     }
 }
